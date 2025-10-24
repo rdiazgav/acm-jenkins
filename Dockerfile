@@ -1,5 +1,5 @@
 # Use Red Hat UBI 9 minimal as base
-FROM registry.access.redhat.com/ubi9/ubi-minimal:9.3
+ROM registry.access.redhat.com/ubi9/nodejs-18-minimal
 
 # Install Node.js (LTS but from RHEL repos, it may include known CVEs)
 RUN microdnf install -y nodejs npm curl && microdnf clean all
