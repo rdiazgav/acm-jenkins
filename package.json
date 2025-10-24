@@ -1,11 +1,13 @@
 {
   "name": "hello-acs",
   "version": "1.0.0",
-  "private": true,
-  "dependencies": {
-    "express": "^4.18.2"
-  },
+  "description": "Simple demo app for Red Hat ACS pipeline test",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "4.17.1",
+    "lodash": "4.17.19"
   }
 }
