@@ -2,15 +2,21 @@ FROM registry.access.redhat.com/ubi9/nodejs-18-minimal
 
 WORKDIR /opt/app
 
-# Copiamos solo lo necesario
+# Copiamos los archivos antes de cambiar permisos
 COPY package.json .
 COPY server.js .
 
-# Instala deps (mantienes versiones viejas a propósito para que ACS detecte CVEs)
+# Fijamos permisos para que cualquier UID pueda escribir
+RUN chmod -R g+w /opt/app && chgrp -R 0 /opt/app && chmod -R g=u /opt/app
+
+# Instalamos dependencias
 RUN npm install --omit=dev
 
-# Permisos para UID arbitrario (SCC restricted)
-RUN chgrp -R 0 /opt/app && chmod -R g=u /opt/app
-
+# Exponemos puerto
 EXPOSE 8080
+
+# Configuración OpenShift-friendly (no asumimos root)
+USER 1001
+
 CMD ["node", "server.js"]
+
